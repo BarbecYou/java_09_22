@@ -1,5 +1,7 @@
 package hu.home.java_09_22;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,6 +24,23 @@ public class Main {
     }
 
     private static void fileBeolvas() {
+        Scanner sc = null;
+        try {
+            sc = new Scanner(new File("./src/hu/home/java_09_22/festmenyek.csv"));
+        } catch (FileNotFoundException e){
+            System.out.println("Hibás filenév!");
+        }
+        sc.useDelimiter(";");
+        int counter = 0;
+        while (sc.hasNextLine()){
+            System.out.println(counter++);
+            String festo = sc.next();
+            String cim = sc.next();
+            String stilus = sc.next();
+            Festmeny temp = new Festmeny(cim, festo, stilus);
+            lista.add(temp);
+        }
+        sc.close();
 
     }
 
@@ -41,14 +60,17 @@ public class Main {
         String bekertStilus;
         sc.nextLine();
 
-        for (int i = 0; i < darabSzam; i++){
-            System.out.println("Adja meg a festmény címét: ");
-            bekertCim = sc.nextLine();
-            System.out.println("Adja meg a festőt: ");
-            bekertFesto = sc.nextLine();
-            System.out.println("Adja meg a stílust: ");
-            bekertStilus = sc.nextLine();
-            lista.add(new Festmeny(bekertCim, bekertFesto, bekertStilus));
+        if (darabSzam <= 1){
+            for (int i = 0; i < darabSzam; i++){
+                System.out.println("Adja meg a festmény címét: ");
+                bekertCim = sc.nextLine();
+                System.out.println("Adja meg a festőt: ");
+                bekertFesto = sc.nextLine();
+                System.out.println("Adja meg a stílust: ");
+                bekertStilus = sc.nextLine();
+                lista.add(new Festmeny(bekertCim, bekertFesto, bekertStilus));
+            }
         }
+
     }
 }
